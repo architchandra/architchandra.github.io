@@ -10,9 +10,22 @@
           </a>
         </h2>
         <ul class="contact-list">
-            {%- if site.email -%}
-            <li><a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a></li>
-            {%- endif -%}
+          {%- if site.email_username -%}
+            {% assign footer_email = site.email_username
+              |append: site.email_salt
+              |append: '@'
+              |append: site.email_domain
+            %}
+            {% assign footer_email_public = site.email_username
+              |append: '[at]'
+              |append: site.email_domain|split: '.'|join: '[dot]'
+            %}
+            <li>
+              <a class="u-email" href="mailto:{{ footer_email|encode_email|append: '?subject=Hi' }}" title="Send me an email">
+                {{- footer_email_public -}}
+              </a>
+            </li>
+          {%- endif -%}
         </ul>
       </div>
 
